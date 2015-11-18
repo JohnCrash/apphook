@@ -5,3 +5,5 @@ src/.deps/ah.Po
 src/Makefile
 src/ah.o
 stamp-h1
+*.Po
+*.o

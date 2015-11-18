@@ -1,7 +1,7 @@
 #include <stdio.h>
-#incldue <stdlib.h>
+#include <stdlib.h>
 #include <errno.h>
-
+#include <string.h>
 #include "strip.h"
 
 /*
@@ -22,7 +22,7 @@ char * get_src_exe( char * cmd )
 	}
 	else
 	{
-		strcat(src,'_src');
+		strcat(src,"_src");
 	}
 	return src;
 }
@@ -44,7 +44,7 @@ int main(int n,char *args[])
 	for(i=0;i<n;i++)
 	{
 		arg[i] = strip_cygdrive(args[i]);
-		printf("[%d] %s -> %s\n",i,args,arg);
+		printf("[%d] %s -> %s\n",i,args[i],arg[i]);
 	}
 	ret = execv(src_cmd,arg);
 	printf("%s return %d errno=%d\n",src_cmd,ret,errno);
