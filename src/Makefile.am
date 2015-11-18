@@ -1,2 +1,2 @@
 bin_PROGRAMS=ah
-ah_SOURCES=ah.c
+ah_SOURCES=ah.c strip.h strip.c

@@ -90,7 +90,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_ah_OBJECTS = ah.$(OBJEXT)
+am_ah_OBJECTS = ah.$(OBJEXT) strip.$(OBJEXT)
 ah_OBJECTS = $(am_ah_OBJECTS)
 ah_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -232,7 +232,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ah_SOURCES = ah.c
+ah_SOURCES = ah.c strip.h strip.c
 all: all-am
 
 .SUFFIXES:
@@ -321,6 +321,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ah.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strip.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
