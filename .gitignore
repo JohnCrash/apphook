@@ -7,3 +7,5 @@ src/ah.o
 stamp-h1
 *.Po
 *.o
+*.exe
+autom4te.cache/

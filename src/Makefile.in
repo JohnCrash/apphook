@@ -76,7 +76,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = ah$(EXEEXT) ah_src$(EXEEXT)
+bin_PROGRAMS = ah$(EXEEXT) ah_src$(EXEEXT) trace$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp
@@ -96,6 +96,9 @@ ah_LDADD = $(LDADD)
 am_ah_src_OBJECTS = test.$(OBJEXT)
 ah_src_OBJECTS = $(am_ah_src_OBJECTS)
 ah_src_LDADD = $(LDADD)
+am_trace_OBJECTS = trace.$(OBJEXT)
+trace_OBJECTS = $(am_trace_OBJECTS)
+trace_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -124,8 +127,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(ah_SOURCES) $(ah_src_SOURCES)
-DIST_SOURCES = $(ah_SOURCES) $(ah_src_SOURCES)
+SOURCES = $(ah_SOURCES) $(ah_src_SOURCES) $(trace_SOURCES)
+DIST_SOURCES = $(ah_SOURCES) $(ah_src_SOURCES) $(trace_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -237,6 +240,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ah_SOURCES = ah.c strip.h strip.c
 ah_src_SOURCES = test.c
+trace_SOURCES = trace.c
 all: all-am
 
 .SUFFIXES:
@@ -322,6 +326,10 @@ ah_src$(EXEEXT): $(ah_src_OBJECTS) $(ah_src_DEPENDENCIES) $(EXTRA_ah_src_DEPENDE
 	@rm -f ah_src$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(ah_src_OBJECTS) $(ah_src_LDADD) $(LIBS)
 
+trace$(EXEEXT): $(trace_OBJECTS) $(trace_DEPENDENCIES) $(EXTRA_trace_DEPENDENCIES) 
+	@rm -f trace$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(trace_OBJECTS) $(trace_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -331,6 +339,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ah.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strip.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trace.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
