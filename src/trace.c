@@ -79,6 +79,7 @@ int main(int n,char *args[])
 	arg = (char **)malloc((n+1)*sizeof(char*));
 	memset(arg,0,sizeof(char*)*(n+1));
 	src_cmd = get_src_exe(args[0]);
+	//args[0] = strdup(src_cmd);
 	fp = fopen(get_log_file(args[0]),"a+");
 	fprintf(fp,"------------------------------------\n");
 	for(i=0;i<n;i++)
@@ -87,7 +88,7 @@ int main(int n,char *args[])
 	}
 	fprintf(fp,"execute %s\n",src_cmd);
 	fclose(fp);
-	ret = execv(src_cmd,arg);
+	ret = execv(src_cmd,args);
 	printf("%s return %d errno=%d\n",src_cmd,ret,errno);
 	printf("------------------------------------\n");
 	return ret;
