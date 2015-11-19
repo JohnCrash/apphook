@@ -16,7 +16,7 @@ char * strip_cygdrive(char *p)
 		result = strdup(p);
 		strcpy(result+offset+1,result+offset+strlen(CYGDRIVE));
 		result[offset]=result[offset+1];
-		result[offset+1]='/';
+		result[offset+1]=':';
 		return result;
 	}
 	else

@@ -4,27 +4,27 @@
 #include <string.h>
 #include "strip.h"
 
+char * get_process_path( )
+{
+	char arg1[20];
+	char exepath[1024 + 1] = {0};
+
+	sprintf( arg1, "/proc/%d/exe", getpid() );
+	readlink( arg1, exepath, 1024 );
+	return strdup(exepath);
+}
 /*
  * 取得原来的命令
  */
 char * get_src_exe( char * cmd )
 {
-	char * src;
-	int len;
-	len = strlen(cmd);
-	src = (char*)malloc(len+12);
-	strcpy(src,cmd);
-	if(src[len-1]=='e' && src[len-2]=='x' && 
-		src[len-3]=='e' && src[len-4]=='.')
-	{
-		src[len-4]=0;
-		strcat(src,"_src.exe");
-	}
-	else
-	{
-		strcat(src,"_src");
-	}
-	return src;
+	char * pp;
+	char * abs;
+	pp = get_process_path();
+	abs = (char *)malloc(strlen(pp)+12);
+	strcpy(abs,pp);
+	strcat(abs,"_src");
+	return abs;
 }
 
 /*
@@ -37,6 +37,7 @@ int main(int n,char *args[])
 	char * src_cmd;
 	int i,ret;
 
+	printf("%s\n",get_process_path());
 	arg = (char **)malloc((n+1)*sizeof(char*));
 	memset(arg,0,sizeof(char*)*(n+1));
 	src_cmd = get_src_exe(args[0]);
@@ -46,6 +47,8 @@ int main(int n,char *args[])
 		arg[i] = strip_cygdrive(args[i]);
 		printf("[%d] %s -> %s\n",i,args[i],arg[i]);
 	}
+	printf("execute %s\n",src_cmd);
+
 	ret = execv(src_cmd,arg);
 	printf("%s return %d errno=%d\n",src_cmd,ret,errno);
 	printf("------------------------------------\n");
