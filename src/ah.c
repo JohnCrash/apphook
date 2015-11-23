@@ -2,9 +2,14 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include <unistd.h>
+#ifndef WIN32
+	#include <unistd.h>
+#else
+	#include <windows.h>
+#endif
 #include "strip.h"
 
+#ifndef WIN32
 char * get_process_path( )
 {
 	char arg1[20];
@@ -14,6 +19,14 @@ char * get_process_path( )
 	readlink( arg1, exepath, 1024 );
 	return strdup(exepath);
 }
+#else
+char * get_process_path( )
+{
+	char exepath[1024];
+	GetModuleFileName(NULL,exepath,1024);
+	return exepath;
+}	
+#endif
 /*
  * 取得原来的命令
  */
